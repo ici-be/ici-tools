@@ -1,5 +1,5 @@
 <?php
-namespace ici\ici;
+namespace ici\ici_tools;
 
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
