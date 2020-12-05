@@ -1,0 +1,14 @@
+{
+    "name": "ici-be/ici-tools",
+    "description": "Spatial PHP tools",
+    "require": {
+        "php": "^7.0",
+        "symfony/http-client": "5.*"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    }
+}
