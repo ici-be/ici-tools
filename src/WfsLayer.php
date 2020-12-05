@@ -1,11 +1,8 @@
 <?php
 namespace ici-be\ici-tools;
 
-use PhpParser\Node\Expr\Cast\Object_;
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class WfsLayer
 {
