@@ -1,5 +1,5 @@
 {
-    "name": "ici/ici",
+    "name": "ici/ici_tools",
     "description": "Spatial PHP tools",
     "require": {
         "php": "^7.0",
