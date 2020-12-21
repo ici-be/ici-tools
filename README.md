@@ -29,11 +29,28 @@ $wfs->setCqlFilter("MU_NAME_FRE LIKE 'Woluwe%'");
 // Limit retrieved attributes to MU_NAME_FRE, MU_NAME_DUT and GEOM (municipalities names in French and Dutch, and the geometry)
 $wfs->setPropertyName('MU_NAME_FRE,MU_NAME_DUT,GEOM');
 
-// Get the GET query
+// Return the GET query
 $wfs->getQueryUrl(); // https://geoservices-urbis.irisnet.be/geoserver/wfs?service=WFS&version=2.0.0&request=GetFeature&typeName=UrbisAdm%3AMu&outputFormat=json&resultType=results&propertyname=MU_NAME_FRE%2CMU_NAME_DUT%2CGEOM&cql_filter=MU_NAME_FRE+LIKE+%27Woluwe%25%27
 
 // Return only the number of results
 $wfs->getHits()
+
+// Return the rows and their properties in an array
+$wfs->getPropertiesArray()
+/*
+array:2 [▼
+  0 => array:3 [▼
+    "MU_NAME_DUT" => "Sint-Pieters-Woluwe"
+    "MU_NAME_FRE" => "Woluwe-Saint-Pierre"
+    "MU_ID" => 8900
+  ]
+  1 => array:3 [▼
+    "MU_NAME_DUT" => "Sint-Lambrechts-Woluwe"
+    "MU_NAME_FRE" => "Woluwe-Saint-Lambert"
+    "MU_ID" => 8800
+  ]
+]
+*/
 
 ...
 ```
