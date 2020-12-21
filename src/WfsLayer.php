@@ -4,7 +4,6 @@ namespace ici\ici_tools;
 
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-use Symfony\Component\DomCrawler\Crawler;
 
 class WfsLayer
 {
@@ -267,9 +266,6 @@ class WfsLayer
 
     /**
      * @return \stdClass|null
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      */
     public function getResults(): ?\stdClass
     {
@@ -282,11 +278,17 @@ class WfsLayer
                 return null;
             }
             $json = json_decode($response->getContent(), false);
+
+            return $json;
+
         } catch (TransportExceptionInterface $e) {
             return null;
         }
-
-        return $json;
     }
-    
+
+    public function toJson(): JsonResponse
+    {
+        return new JsonResponse($this);
+    }
+
 }
