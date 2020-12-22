@@ -44,9 +44,11 @@ class WfsLayer
     /**
      * @param string $cql_filter
      */
-    public function setCqlFilter(string $cql_filter): void
+    public function setCqlFilter(string $cql_filter): self
     {
         $this->cql_filter = $cql_filter;
+
+        return $this;
     }
 
     /**
@@ -60,9 +62,11 @@ class WfsLayer
     /**
      * @param int $output_srs
      */
-    public function setOutputSrs(int $output_srs): void
+    public function setOutputSrs(int $output_srs): self
     {
         $this->output_srs = $output_srs;
+
+        return $this;
     }
 
     /**
@@ -76,9 +80,11 @@ class WfsLayer
     /**
      * @param string $sort_by
      */
-    public function setSortBy($sort_by): void
+    public function setSortBy(string $sort_by, string $order = 'ASC'): self
     {
-        $this->sort_by = $sort_by;
+        $this->sort_by = $sort_by.' '.($order === 'ASC' ? 'A' : 'D');
+
+        return $this;
     }
 
     /**
@@ -92,9 +98,11 @@ class WfsLayer
     /**
      * @param string $property_name
      */
-    public function setPropertyName(string $property_name): void
+    public function setPropertyName(string $property_name): self
     {
         $this->property_name = $property_name;
+
+        return $this;
     }
 
     /**
@@ -108,9 +116,11 @@ class WfsLayer
     /**
      * @param int $count
      */
-    public function setCount(int $count): void
+    public function setCount(int $count): self
     {
         $this->count = $count;
+
+        return $this;
     }
 
     /**
@@ -132,9 +142,11 @@ class WfsLayer
     /**
      * @param string $base_path
      */
-    public function setBasePath(string $base_path): void
+    public function setBasePath(string $base_path): self
     {
         $this->base_path = $base_path;
+
+        return $this;
     }
 
     /**
@@ -185,9 +197,11 @@ class WfsLayer
     /**
      * @param string $version
      */
-    public function setVersion(string $version): void
+    public function setVersion(string $version): self
     {
         $this->version = $version;
+
+        return $this;
     }
 
     /**
@@ -201,9 +215,11 @@ class WfsLayer
     /**
      * @param string $layer_name
      */
-    public function setLayerName(string $layer_name): void
+    public function setLayerName(string $layer_name): self
     {
         $this->layer_name = $layer_name;
+
+        return $this;
     }
 
     /**
@@ -233,9 +249,11 @@ class WfsLayer
     /**
      * @param string $result_type
      */
-    public function setResultType(string $result_type): void
+    public function setResultType(string $result_type): self
     {
         $this->result_type = $result_type;
+
+        return $this;
     }
 
     /**
