@@ -83,6 +83,18 @@ array:2 [▼
   ]
 ]
 */
+
+// 7. Send with GET method instead of POST
+$wfs->setMethod('GET');
+
+// 8. Change the name for the json/geojson outputFormat (default: "json")
+$wfs->setOutputFormat('GEOJSON');
+
+// 9. Define startIndex (useful along with setCount to page results of a GetFeature request. From WFS version 2.0.0 only)
+$wfs->setStartIndex(10);
+
+// 10. Change WFS version (default: "2.0.0")
+$wfs->setVersion("1.1.0");
 ```
 
 
