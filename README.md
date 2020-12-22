@@ -95,6 +95,9 @@ $wfs->setStartIndex(10);
 
 // 10. Change WFS version (default: "2.0.0")
 $wfs->setVersion("1.1.0");
+
+// 11. Project geometries in another Spatial Reference System
+$wfs->setOutputSrs(4326);
 ```
 
 
