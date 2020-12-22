@@ -16,6 +16,8 @@ class WfsLayer
     private $property_name;
     private $count;
     private $result_type = 'results';
+    private $output_format = 'json';
+    private $method = 'POST';
 
     /**
      * WfsLayer constructor.
@@ -65,6 +67,42 @@ class WfsLayer
     public function setOutputSrs(int $output_srs): self
     {
         $this->output_srs = $output_srs;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOutputFormat(): string
+    {
+        return $this->output_format;
+    }
+
+    /**
+     * @param string $output_format
+     */
+    public function setOutputFormat(string $output_format): self
+    {
+        $this->output_format = $output_format;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod(): string
+    {
+        return $this->method;
+    }
+
+    /**
+     * @param string $method
+     */
+    public function setMethod(string $method): self
+    {
+        $this->method = $method;
 
         return $this;
     }
@@ -159,7 +197,7 @@ class WfsLayer
             'version' => $this->getVersion(),
             'request' => 'GetFeature',
             'typeName' => $this->getLayerName(),
-            'outputFormat' => 'json',
+            'outputFormat' => $this->getOutputFormat(),
             'resultType' => $this->result_type,
         );
 
@@ -231,7 +269,11 @@ class WfsLayer
         $httpClient = HttpClient::create();
 
         try {
-            $response = $httpClient->request('POST', $this->getBasePath(), ['query' => $this->getQueryFields()]);
+            if ($this->getMethod() === 'POST') {
+                $response = $httpClient->request('POST', $this->getBasePath(), ['query' => $this->getQueryFields()]);
+            } else {
+                $response = $httpClient->request('GET', $this->getQueryUrl());
+            }
             $statusCode = $response->getStatusCode();
             if ($statusCode !== 200) {
                 return null;
@@ -290,8 +332,13 @@ class WfsLayer
         $httpClient = HttpClient::create();
 
         try {
-            $response = $httpClient->request('POST', $this->getBasePath(), ['query' => $this->getQueryFields()]);
+            if ($this->getMethod() === 'POST') {
+                $response = $httpClient->request('POST', $this->getBasePath(), ['query' => $this->getQueryFields()]);
+            } else {
+                $response = $httpClient->request('GET', $this->getQueryUrl());
+            }
             $statusCode = $response->getStatusCode();
+
             if ($statusCode !== 200) {
                 return null;
             }
