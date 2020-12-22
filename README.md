@@ -5,7 +5,7 @@ Spatial PHP tools
 WfsLayer
 -----
 
-Geoserver [WFS layer](https://docs.geoserver.org/stable/en/user/services/wfs/basics.html) queries in a PHP object.
+[WFS layer](https://docs.geoserver.org/stable/en/user/services/wfs/basics.html) queries in a PHP object (Geoserver / ArcGIS).
 
 
 * Examples with a [BRIC.brussels](https://bric.brussels/) layer containing the 19 municipalities of the Brussels-Capital Region in Belgium
