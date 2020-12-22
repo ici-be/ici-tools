@@ -18,6 +18,7 @@ class WfsLayer
     private $result_type = 'results';
     private $output_format = 'json';
     private $method = 'POST';
+    private $start_index;
 
     /**
      * WfsLayer constructor.
@@ -67,42 +68,6 @@ class WfsLayer
     public function setOutputSrs(int $output_srs): self
     {
         $this->output_srs = $output_srs;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOutputFormat(): string
-    {
-        return $this->output_format;
-    }
-
-    /**
-     * @param string $output_format
-     */
-    public function setOutputFormat(string $output_format): self
-    {
-        $this->output_format = $output_format;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMethod(): string
-    {
-        return $this->method;
-    }
-
-    /**
-     * @param string $method
-     */
-    public function setMethod(string $method): self
-    {
-        $this->method = $method;
 
         return $this;
     }
@@ -162,11 +127,67 @@ class WfsLayer
     }
 
     /**
+     * @return int
+     */
+    public function getStartIndex(): int
+    {
+        return $this->start_index;
+    }
+
+    /**
+     * @param int $start_index
+     */
+    public function setStartIndex(int $start_index): self
+    {
+        $this->start_index = $start_index;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getHits(): ?int
+    {
+        $this->setResultType('hits');
+        $httpClient = HttpClient::create();
+
+        try {
+            if ($this->getMethod() === 'POST') {
+                $response = $httpClient->request('POST', $this->getBasePath(), ['query' => $this->getQueryFields()]);
+            } else {
+                $response = $httpClient->request('GET', $this->getQueryUrl());
+            }
+            $statusCode = $response->getStatusCode();
+            if ($statusCode !== 200) {
+                return null;
+            }
+            $exp = explode('numberMatched="', $response->getContent());
+            $hits = strtok($exp[1], '"');
+
+        } catch (TransportExceptionInterface $e) {
+            return null;
+        }
+
+        return $hits;
+    }
+
+    /**
      * @return string
      */
-    public function getQueryUrl(): string
+    public function getMethod(): string
     {
-        return $this->getBasePath().'?'.http_build_query($this->getQueryFields());
+        return $this->method;
+    }
+
+    /**
+     * @param string $method
+     */
+    public function setMethod(string $method): self
+    {
+        $this->method = $method;
+
+        return $this;
     }
 
     /**
@@ -198,7 +219,7 @@ class WfsLayer
             'request' => 'GetFeature',
             'typeName' => $this->getLayerName(),
             'outputFormat' => $this->getOutputFormat(),
-            'resultType' => $this->result_type,
+            'resultType' => $this->getResultType(),
         );
 
         if ($this->output_srs) {
@@ -212,6 +233,9 @@ class WfsLayer
         }
         if ($this->cql_filter) {
             $fields['cql_filter'] = $this->cql_filter;
+        }
+        if ($this->start_index) {
+            $fields['startIndex'] = $this->start_index;
         }
         if ($this->count) {
             if ($this->getVersion()[0] > 1) {
@@ -261,31 +285,29 @@ class WfsLayer
     }
 
     /**
-     * @return int|null
+     * @return string
      */
-    public function getHits(): ?int
+    public function getOutputFormat(): string
     {
-        $this->setResultType('hits');
-        $httpClient = HttpClient::create();
+        return $this->output_format;
+    }
 
-        try {
-            if ($this->getMethod() === 'POST') {
-                $response = $httpClient->request('POST', $this->getBasePath(), ['query' => $this->getQueryFields()]);
-            } else {
-                $response = $httpClient->request('GET', $this->getQueryUrl());
-            }
-            $statusCode = $response->getStatusCode();
-            if ($statusCode !== 200) {
-                return null;
-            }
-            $exp = explode('numberMatched="', $response->getContent());
-            $hits = strtok($exp[1], '"');
+    /**
+     * @param string $output_format
+     */
+    public function setOutputFormat(string $output_format): self
+    {
+        $this->output_format = $output_format;
 
-        } catch (TransportExceptionInterface $e) {
-            return null;
-        }
+        return $this;
+    }
 
-        return $hits;
+    /**
+     * @return string
+     */
+    public function getResultType(): string
+    {
+        return $this->result_type;
     }
 
     /**
@@ -296,6 +318,14 @@ class WfsLayer
         $this->result_type = $result_type;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQueryUrl(): string
+    {
+        return $this->getBasePath().'?'.http_build_query($this->getQueryFields());
     }
 
     /**
