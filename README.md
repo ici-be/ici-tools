@@ -2,15 +2,14 @@
 Spatial PHP tools
 
 
-WfsLayer
+## WfsLayer
 -----
 
-[WFS layer](https://docs.geoserver.org/stable/en/user/services/wfs/basics.html) queries in a PHP object (Geoserver / ArcGIS).
+Query a [WFS layer](https://docs.geoserver.org/stable/en/user/services/wfs/basics.html) with PHP (Geoserver / ArcGIS).
 
+#### A. Typical usage with method chaining
 
-* Examples with a [BRIC.brussels](https://bric.brussels/) layer containing the 19 municipalities of the Brussels-Capital Region in Belgium
-
-A. Typical usage with method chaining
+* Example with a [BRIC.brussels](https://bric.brussels/) layer containing the 19 municipalities of the Brussels-Capital Region in Belgium
 
 ```php 
 use ici\ici_tools\WfsLayer;
@@ -33,7 +32,31 @@ array:4 [▼
 */
 ```
 
-B. Available methods
+#### B. Available methods
+
+```php 
+use ici\ici_tools\WfsLayer;
+
+// All setters can be chained and have public getters
+setVersion(string $version); // Change WFS version (default: "2.0.0")
+setPropertyName(string $property_name); // To restrict requested attributes. You can specify a single attribute, or multiple attributes separated by commas.
+setCqlFilter(string $cql_filter); // See the CQL_FILTER documentation: https://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html
+setOutputSrs(int $output_srs); // Spatial reprojection using another SRS (ex: 4326 for EPSG:4326)
+setMethod(string $method = 'POST'); // use GET or POST method (POST is used by default but is not always available)
+setOutputFormat(string $output_format = 'json'); // The class needs a json/geojson format to work. If the default doesn't work, check with a getCapabilities Query. Sometimes it's called "GEOJSON" for example.
+setStartIndex(int $start_index); // To start display results after x elements (for pagination)
+setCount(int $count); // To limit the number of features returned
+setSortBy(string $sort_by, string $order = 'ASC'); // To sort the returned selection based on an attribute value
+
+// getters
+getHits(); // Return only the number of results
+getResults(); // Return the json data as a PHP object
+getPropertiesArray(); // Return the rows and their properties in a PHP array
+getQueryUrl(); // Return the query as a URL with GET parameters
+
+```
+
+#### C. More examples
 
 ```php
 use ici\ici_tools\WfsLayer;
@@ -55,7 +78,6 @@ var_dump($wfs->getResults());
 */
 
 // 2. Limit query to municipalities beginning with "Woluwe" in French
-// See the CQL_FILTER documentation: https://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html 
 $wfs->setCqlFilter("MU_NAME_FRE LIKE 'Woluwe%'");
 
 // 3. Limit retrieved attributes to MU_NAME_FRE, MU_NAME_DUT and GEOM (municipalities names in French and Dutch, and the geometry)
@@ -64,10 +86,7 @@ $wfs->setPropertyName('MU_NAME_FRE,MU_NAME_DUT,GEOM');
 // 4. Return the url of the generated query
 $wfs->getQueryUrl(); // https://geoservices-urbis.irisnet.be/geoserver/wfs?service=WFS&version=2.0.0&request=GetFeature&typeName=UrbisAdm%3AMu&outputFormat=json&resultType=results&propertyname=MU_NAME_FRE%2CMU_NAME_DUT%2CGEOM&cql_filter=MU_NAME_FRE+LIKE+%27Woluwe%25%27
 
-// 5. Return only the number of results
-$wfs->getHits()
-
-// 6. Return the rows and their properties in an array
+// 5. Return the rows and their properties in an array
 $wfs->getPropertiesArray()
 /*
 array:2 [▼
@@ -83,21 +102,6 @@ array:2 [▼
   ]
 ]
 */
-
-// 7. Send with GET method instead of POST
-$wfs->setMethod('GET');
-
-// 8. Change the name for the json/geojson outputFormat (default: "json")
-$wfs->setOutputFormat('GEOJSON');
-
-// 9. Define startIndex (useful along with setCount to page results of a GetFeature request. From WFS version 2.0.0 only)
-$wfs->setStartIndex(10);
-
-// 10. Change WFS version (default: "2.0.0")
-$wfs->setVersion("1.1.0");
-
-// 11. Project geometries in another Spatial Reference System
-$wfs->setOutputSrs(4326);
 ```
 
 
