@@ -34,10 +34,9 @@ array:4 [▼
 
 #### B. Available methods
 
-```php 
-use ici\ici_tools\WfsLayer;
+* All setters can be chained and have public getters  
 
-// All setters can be chained and have public getters
+```php 
 setVersion(string $version); // Change WFS version (default: "2.0.0")
 setPropertyName(string $property_name); // To restrict requested attributes. You can specify a single attribute, or multiple attributes separated by commas.
 setCqlFilter(string $cql_filter); // See the CQL_FILTER documentation: https://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html
@@ -47,8 +46,11 @@ setOutputFormat(string $output_format = 'json'); // The class needs a json/geojs
 setStartIndex(int $start_index); // To start display results after x elements (for pagination)
 setCount(int $count); // To limit the number of features returned
 setSortBy(string $sort_by, string $order = 'ASC'); // To sort the returned selection based on an attribute value
+```
 
-// getters
+* Other getters
+
+```php 
 getHits(); // Return only the number of results
 getResults(); // Return the json data as a PHP object
 getPropertiesArray(); // Return the rows and their properties in a PHP array
