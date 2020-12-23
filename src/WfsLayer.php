@@ -380,10 +380,4 @@ class WfsLayer
             return null;
         }
     }
-
-    public function toJson(): JsonResponse
-    {
-        return new JsonResponse($this);
-    }
-
 }
