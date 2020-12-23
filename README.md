@@ -1,6 +1,5 @@
 # ici-tools
-Spatial PHP tools
-
+Spatial PHP tools. The WfsLayer class helps create requests on a WFS layer using a PHP object. Web Feature Service (WFS) is a standard of the Open Geospatial Consortium.
 
 ## WfsLayer
 -----
