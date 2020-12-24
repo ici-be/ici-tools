@@ -12,9 +12,6 @@ composer require ici-be/ici-tools
 ```
 -----
 
-Usage
------
-
 ## WfsLayer ##
 
 Query a [WFS layer](https://docs.geoserver.org/stable/en/user/services/wfs/basics.html) with PHP (Geoserver / ArcGIS).
@@ -76,6 +73,7 @@ getQueryUrl(); // Return the query as a URL with GET parameters
 
 ```php
 <?php
+
 use ici\ici_tools\WfsLayer;
 
 // Construct layer with base path and layer name
