@@ -1,13 +1,21 @@
-# ici-tools
-Spatial PHP tools. The WfsLayer class helps create requests on a WFS layer using a PHP object. Web Feature Service (WFS) is a standard of the Open Geospatial Consortium.
+ici-tools
+========
+**ici-tools** is a PHP geo-related library, providing spatial tools.
+
+## Features
+* **WfsLayer** helps create requests on a WFS layer using a PHP object. Web Feature Service (WFS) is a standard of the Open Geospatial Consortium.
+
 
 ## Installation
 ```
 composer require ici-be/ici-tools
 ```
 -----
-### WfsLayer
 
+Usage
+-----
+
+## WfsLayer ##
 
 Query a [WFS layer](https://docs.geoserver.org/stable/en/user/services/wfs/basics.html) with PHP (Geoserver / ArcGIS).
 
@@ -16,6 +24,8 @@ Query a [WFS layer](https://docs.geoserver.org/stable/en/user/services/wfs/basic
 * Example with a [BRIC.brussels](https://bric.brussels/) layer containing the 19 municipalities of the Brussels-Capital Region in Belgium
 
 ```php 
+<?php
+
 use ici\ici_tools\WfsLayer;
 
 // Construct layer with base path and layer name
@@ -65,6 +75,7 @@ getQueryUrl(); // Return the query as a URL with GET parameters
 #### C. More examples
 
 ```php
+<?php
 use ici\ici_tools\WfsLayer;
 
 // Construct layer with base path and layer name
