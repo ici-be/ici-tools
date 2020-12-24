@@ -1,6 +1,6 @@
 ici-tools
 ========
-**ici-tools** is a PHP geo-related library, providing spatial tools.
+**ici-tools** is a PHP geo-related library, providing spatial tools. Contributions welcome :)
 
 ## Features
 * **WfsLayer** helps create requests on a WFS layer using a PHP object. Web Feature Service (WFS) is a standard of the Open Geospatial Consortium.
