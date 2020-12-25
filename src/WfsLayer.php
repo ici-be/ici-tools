@@ -336,10 +336,13 @@ class WfsLayer
     public function getPropertiesArray(bool $geometry = false, bool $bbox = false): array
     {
         $this->setResultType('results');
+        $results = $this->getResults();
+
+        if(!isset($results->features)) { return []; }
 
         $array = [];
         $n = 0;
-        foreach ($this->getResults()->features as $feature) {
+        foreach ($results->features as $feature) {
             foreach ($feature->properties as $prop => $value) {
                 if ($bbox || $prop !== 'bbox') {
                     $array[$n][$prop] = $value;
