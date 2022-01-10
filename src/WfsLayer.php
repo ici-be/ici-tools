@@ -39,7 +39,7 @@ class WfsLayer
      * @param string $geom_name
      * @return string
      */
-    public static function filterByPointDistance(string $point, int $meters = 15, string $geom_name): string
+    public static function filterByPointDistance(string $point, string $geom_name, int $meters = 15): string
     {
         return "DWITHIN(".$geom_name.", ".$point.", ".$meters.", meters)";
     }
