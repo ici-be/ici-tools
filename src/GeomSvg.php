@@ -19,7 +19,8 @@ class GeomSvg
 
         $xDiff = $geom['bbox']['maxx'] - $geom['bbox']['minx'];
         $yDiff = $geom['bbox']['maxy'] - $geom['bbox']['miny'];
-
+        
+        if((int)max($xDiff, $yDiff) === 0) { return null; }
 
         if($xDiff>$yDiff) { $max = 'x'; }
         else { $max = 'y'; };
