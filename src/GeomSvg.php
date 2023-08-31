@@ -2,7 +2,7 @@
 
 namespace ici\ici_tools;
 
-use phayes\geophp;
+use \geoPHP\geoPHP;
 
 class GeomSvg
 {
@@ -12,7 +12,7 @@ class GeomSvg
 
         $data = '<svg height="'.$size.'" width="'.$size.'" style="'.$style.'">';
 
-        $geom['wkt'] 	= \geoPHP::load($polygon,'wkt');
+        $geom['wkt'] 	= geoPHP::load($polygon,'wkt');
         $geom['array'] 	= $geom['wkt']->asArray();
 
         $geom['bbox'] = $geom['wkt']->getBBox();
