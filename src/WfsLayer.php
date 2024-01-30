@@ -163,7 +163,12 @@ class WfsLayer
                 return null;
             }
             $exp = explode('numberMatched="', $response->getContent());
-            $hits = strtok($exp[1], '"');
+            if(isset($exp[1])) {
+                $hits = strtok($exp[1], '"');
+            }
+            else {
+                $hits = null;
+            }
 
         } catch (TransportExceptionInterface $e) {
             return null;
