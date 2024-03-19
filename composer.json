@@ -5,7 +5,7 @@
     "require": {
         "php": "^7.0 || ^8.0",
         "wgirhad/geoPHP": "^3.0",
-        "symfony/http-client": "5.* || 6.*"
+        "symfony/http-client": "5.* || 6.* || 7.*"
     },
     "license": "MIT",
     "autoload": {
